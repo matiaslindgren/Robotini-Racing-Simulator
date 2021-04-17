@@ -1,5 +1,6 @@
 {
     "lapCount": 5,
+    "numSegments": 30,
     "autoStartQualifyingSeconds": 3600,
     "mode": "development",
     "visibility": "public",
