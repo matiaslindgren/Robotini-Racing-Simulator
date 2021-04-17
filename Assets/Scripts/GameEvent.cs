@@ -35,17 +35,21 @@ public class GameEvent
 [Serializable]
 public class CarStatus
 {
-    public CarStatus(string name, Vector3 position, Vector3 velocity, Quaternion rotation)
+    public CarStatus(CarController c)
     {
-        this.name = name;
-        this.position = position;
-        this.velocity = velocity;
-        this.rotation = rotation;
+        this.name = c.name;
+        this.position = c.rigidBody.position;
+        this.velocity = c.rigidBody.velocity;
+        this.rotation = c.rigidBody.rotation;
+        this.trackSegment = c.raceController.GetTrackSegment(this.name);
+        this.trackAngle = c.raceController.GetTrackAngle(this.trackSegment, this.rotation);
     }
     public string name;
     public Vector3 position;
     public Vector3 velocity;
     public Quaternion rotation;
+    public float trackAngle;
+    public int trackSegment;
 }
 
 public class GameStatus: GameEvent

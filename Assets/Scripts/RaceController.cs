@@ -19,6 +19,22 @@ public class RaceController : MonoBehaviour
         return cars.Values.Select(car => car.CarInfo);
     }
 
+    public int GetTrackSegment(string car) {
+        return cars[car].trackSegment;
+    }
+
+    public float GetTrackAngle(int seg, Quaternion carRot) {
+        int segment = Math.Max(0, seg);
+        float totalLength = track.Length;
+        float spacing = totalLength / (float)raceParameters.numSegments;
+        int nextSeg = (segment + 1) % raceParameters.numSegments;
+        var cs1 = track.GetSampleAtDistance((segment * spacing) % track.Length);
+        var cs2 = track.GetSampleAtDistance((nextSeg * spacing) % track.Length);
+        float a1 = Quaternion.Angle(carRot, cs1.Rotation);
+        float a2 = Quaternion.Angle(carRot, cs2.Rotation);
+        return (a1 + a2) / 2;
+    }
+
     private void OnEnable()
     {
         track = FindObjectOfType<SplineMesh.Spline>();
@@ -548,7 +564,7 @@ public class RaceController : MonoBehaviour
         internal float lastLapRecordedAt = Time.time;
         public readonly CarInfo CarInfo;
         internal LapCompleted lastLap;
-        private int trackSegment;
+        public int trackSegment;
         internal bool disconnected = false;
         internal bool finished = false;
 
