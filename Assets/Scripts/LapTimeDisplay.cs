@@ -35,7 +35,6 @@ public class LapTimeDisplay : MonoBehaviour
             var index = 0;
             foreach (var s in standings.standings)
             {
-                addCar(s.car);                
                 timers[s.car.name].SetLap(standings, index);
                 index++;
             }
