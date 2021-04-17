@@ -162,7 +162,7 @@ public class CarController : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<CarController>() != null) return; // ignore if colliding with other car
         float collidingFor = GameEvent.TimeDiff(System.DateTime.Now, this.collidingSince);
-        if (collidingFor >= 2) {
+        if (collidingFor >= 0.2) {
             returnToTrack();
         }
     }
