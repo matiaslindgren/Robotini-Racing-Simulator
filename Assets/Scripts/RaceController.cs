@@ -365,7 +365,7 @@ public class RaceController : MonoBehaviour
 
                 var controllers = FindObjectsOfType<CarController>();
                 float totalLength = c.track.Length;
-                float spacing = totalLength / (float)c.raceParameters.numSegments;
+                float spacing = c.raceParameters.numSegmentsBetweenCars * totalLength / (float)c.raceParameters.numSegments;
 
                 var curveSample = c.track.GetSampleAtDistance(
                         c.track.Length - ((i * spacing) % c.track.Length));

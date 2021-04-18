@@ -7,6 +7,7 @@ public class RaceParameters : GameEvent
 {
     public int lapCount = 5;
     public int numSegments = 10;
+    public int numSegmentsBetweenCars = 1;
     public int autoStartQualifyingSeconds = 30;
     public int qualifyingDurationSeconds = 30;
     public int autoStartRaceSeconds = 10;

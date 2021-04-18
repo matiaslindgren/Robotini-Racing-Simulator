@@ -1,6 +1,7 @@
 {
     "lapCount": 5,
     "numSegments": 30,
+    "numSegmentsBetweenCars": 2,
     "autoStartQualifyingSeconds": 3600,
     "mode": "development",
     "visibility": "public",
