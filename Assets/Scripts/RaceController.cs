@@ -603,8 +603,8 @@ public class RaceController : MonoBehaviour
 
         internal bool TrackSegmentStarted(int segment, float totalTime, int numSegments)
         {
+            this.trackSegment = segment;
             if (segment == (this.trackSegment + 1) % numSegments) {
-                this.trackSegment = segment;
                 if (segment == 0)
                 {
                     NewLapTime(totalTime);
