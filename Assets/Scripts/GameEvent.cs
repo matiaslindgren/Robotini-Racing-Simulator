@@ -42,8 +42,10 @@ public class CarStatus
         this.velocity = c.rigidBody.velocity;
         this.rotation = c.rigidBody.rotation;
         this.trackSegment = c.raceController.GetTrackSegment(this.name);
-        this.trackAngle = c.raceController.GetTrackAngle(this.trackSegment, this.rotation);
+        var closestTrackSample = c.ClosestTrackSample(c.raceController.track);
+        this.trackAngle = Quaternion.Angle(this.rotation, closestTrackSample.Rotation);
     }
+
     public string name;
     public Vector3 position;
     public Vector3 velocity;
