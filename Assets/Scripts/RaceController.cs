@@ -23,16 +23,13 @@ public class RaceController : MonoBehaviour
         return cars[car].trackSegment;
     }
 
-    public float GetTrackAngle(int seg, Quaternion carRot) {
-        int segment = Math.Max(0, seg);
-        float totalLength = track.Length;
-        float spacing = totalLength / (float)raceParameters.numSegments;
-        int nextSeg = (segment + 1) % raceParameters.numSegments;
-        var cs1 = track.GetSampleAtDistance((segment * spacing) % track.Length);
-        var cs2 = track.GetSampleAtDistance((nextSeg * spacing) % track.Length);
-        float a1 = Quaternion.Angle(carRot, cs1.Rotation);
-        float a2 = Quaternion.Angle(carRot, cs2.Rotation);
-        return (a1 + a2) / 2;
+    public float TrackDistanceAtSegment(int segment) {
+        float spacing = track.Length / (float)raceParameters.numSegments;
+        return (segment * spacing) % track.Length;
+    }
+
+    public int NextSegment(int segment) {
+        return (segment + 1) % raceParameters.numSegments;
     }
 
     private void OnEnable()

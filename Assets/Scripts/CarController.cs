@@ -167,12 +167,19 @@ public class CarController : MonoBehaviour
         }
     }
 
-    private void returnToTrack() {
-        Debug.Log("Returning car to track: " + CarInfo?.name);
-        var track = FindObjectOfType<SplineMesh.Spline>();
+    public SplineMesh.CurveSample ClosestTrackSample(SplineMesh.Spline track) {
+        int segmentA = raceController.GetTrackSegment(CarInfo?.name);
+        int segmentB = raceController.NextSegment(segmentA);
+
+        float begin = raceController.TrackDistanceAtSegment(segmentA);
+        float end = track.Length;
+        if (segmentB > 0) {
+            end = raceController.TrackDistanceAtSegment(segmentB);
+        }
+
         SplineMesh.CurveSample closest = null;
         float closestDistance = float.MaxValue;
-        for (float i = 0; i < track.Length; i += 0.05f) {
+        for (float i = begin; i < end; i += 0.01f) {
             var curveSample = track.GetSampleAtDistance(i);
             var d = (gameObject.transform.position - 0.048f * Vector3.up - curveSample.location);
             d.y *= 10;
@@ -182,7 +189,13 @@ public class CarController : MonoBehaviour
                 closest = curveSample;
             }
         }
+        return closest;
+    }
 
+    private void returnToTrack() {
+        Debug.Log("Returning car to track: " + CarInfo?.name);
+        var track = FindObjectOfType<SplineMesh.Spline>();
+        var closest = ClosestTrackSample(track);
         rigidBody.position = closest.location + 0.1f * Vector3.up;
         rigidBody.rotation = closest.Rotation;
         rigidBody.velocity = Vector3.zero;
