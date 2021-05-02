@@ -15,6 +15,10 @@ public class RaceController : MonoBehaviour
     private RaceParameters raceParameters;
     private State state;
 
+    public int GetNumSegments() {
+        return raceParameters.numSegments;
+    }
+
     public IEnumerable<CarInfo> GetCars() {
         return cars.Values.Select(car => car.CarInfo);
     }
@@ -600,8 +604,9 @@ public class RaceController : MonoBehaviour
 
         internal bool TrackSegmentStarted(int segment, float totalTime, int numSegments)
         {
-            if (segment == (this.trackSegment + 1) % numSegments) {
-                this.trackSegment = segment;
+            int currentSegment = this.trackSegment;
+            this.trackSegment = segment;
+            if (segment == (currentSegment + 1) % numSegments) {
                 if (segment == 0)
                 {
                     NewLapTime(totalTime);

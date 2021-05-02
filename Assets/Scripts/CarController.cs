@@ -169,15 +169,19 @@ public class CarController : MonoBehaviour
 
     public SplineMesh.CurveSample ClosestTrackSample(SplineMesh.Spline track) {
         int segmentA = raceController.GetTrackSegment(CarInfo?.name);
-        int segmentB = raceController.NextSegment(segmentA);
+        int segmentB = -1;
 
-        float begin = raceController.TrackDistanceAtSegment(segmentA);
-        float end = track.Length;
-        if (segmentB > 0) {
-            end = raceController.TrackDistanceAtSegment(segmentB);
+        if (segmentA < 0) {
+            segmentA = 0;
+            segmentB = raceController.GetNumSegments();
+        } else {
+            segmentB = raceController.NextSegment(segmentA);
         }
 
-        SplineMesh.CurveSample closest = null;
+        float begin = Math.Max(0, raceController.TrackDistanceAtSegment(segmentA));
+        float end = Math.Max(0, raceController.TrackDistanceAtSegment(segmentB));
+
+        var closest = track.GetSampleAtDistance(begin);
         float closestDistance = float.MaxValue;
         for (float i = begin; i < end; i += 0.01f) {
             var curveSample = track.GetSampleAtDistance(i);
