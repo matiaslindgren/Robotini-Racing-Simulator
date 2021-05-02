@@ -15,7 +15,7 @@ public class WebRaceController : MonoBehaviour
 #endif
 
     public void SendToWeb(GameEvent msg) {
-        string jsonString = JsonUtility.ToJson(msg);        
+        string jsonString = JsonUtility.ToJson(msg);
 #if UNITY_EDITOR
         Debug.Log("Would send to web: " + jsonString);
 #elif UNITY_WEBGL
@@ -44,7 +44,7 @@ public class WebRaceController : MonoBehaviour
             socket.EnqueueCommand(c.command);
         } else {
             Debug.Log("Unhandled message from web: " + msgJson);
-        }        
+        }
     }
 
     void StartFreePractice()

@@ -18,7 +18,7 @@ public class CarSocketListener : MonoBehaviour {
         {
             Debug.Log("Initializing car socket");
             StartListening();
-        }        
+        }
     }
 
     private void OnDisable()
@@ -51,7 +51,7 @@ public class CarSocketListener : MonoBehaviour {
         int port = 11000;
         IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
-        // Create a TCP/IP socket.  
+        // Create a TCP/IP socket.
         listener = new Socket(ipAddress.AddressFamily,
             SocketType.Stream, ProtocolType.Tcp);
 
@@ -64,16 +64,16 @@ public class CarSocketListener : MonoBehaviour {
         {
             while (listener != null)
             {
-                // Set the event to nonsignaled state.  
+                // Set the event to nonsignaled state.
                 allDone.Reset();
 
-                // Start an asynchronous socket to listen for connections.  
+                // Start an asynchronous socket to listen for connections.
                 Debug.Log("Waiting for car connection...");
                 listener.BeginAccept(
                     new AsyncCallback(AcceptCallback),
                     listener);
 
-                // Wait until a connection is made before continuing.  
+                // Wait until a connection is made before continuing.
                 allDone.WaitOne();
             }
         });
@@ -100,5 +100,5 @@ public class CarSocketListener : MonoBehaviour {
         socket.NoDelay = true;
 
         clientSocketQueue.Enqueue(socket);
-    }    
+    }
 }

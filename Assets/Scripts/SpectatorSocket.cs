@@ -92,7 +92,7 @@ public class SpectatorSocket : MonoBehaviour
         int port = 11001;
         IPEndPoint localEndPoint = new IPEndPoint(ipAddress, port);
 
-        // Create a TCP/IP socket.  
+        // Create a TCP/IP socket.
         listener = new Socket(ipAddress.AddressFamily,
             SocketType.Stream, ProtocolType.Tcp);
 
@@ -105,16 +105,16 @@ public class SpectatorSocket : MonoBehaviour
         {
             while (listener != null)
             {
-                // Set the event to nonsignaled state.  
+                // Set the event to nonsignaled state.
                 allDone.Reset();
 
-                // Start an asynchronous socket to listen for connections.  
+                // Start an asynchronous socket to listen for connections.
                 Debug.Log("Waiting for a spectator connection...");
                 listener.BeginAccept(
                     new AsyncCallback(AcceptCallback),
                     listener);
 
-                // Wait until a connection is made before continuing.  
+                // Wait until a connection is made before continuing.
                 allDone.WaitOne();
             }
         });
@@ -129,7 +129,7 @@ public class SpectatorSocket : MonoBehaviour
 
         Socket socket = listener.EndAccept(ar);
         socket.SendBufferSize = 20000;
-        socket.NoDelay = true;        
+        socket.NoDelay = true;
 
         Debug.Log("Spectator connected.");
 
@@ -204,8 +204,8 @@ public class SpectatorSocket : MonoBehaviour
                 {
                     if (eventQueue.TryDequeue(out gameEvent))
                     {
-                        //Debug.Log("Sending event " + gameEvent.type);                        
-                        send(gameEvent);                    
+                        //Debug.Log("Sending event " + gameEvent.type);
+                        send(gameEvent);
                     }
                     else
                     {

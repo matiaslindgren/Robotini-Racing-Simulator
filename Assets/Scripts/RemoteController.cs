@@ -72,7 +72,7 @@ public class RemoteController : RemoteEventPlayer
             if (command != null)
             {
                 ApplyEvent(command);
-            }            
+            }
         }
     }
 }

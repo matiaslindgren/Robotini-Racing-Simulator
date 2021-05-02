@@ -51,14 +51,14 @@ public class PlaybackController : RemoteEventPlayer
 #endif
 
     // Called from the page javascript!
-    public void PlayUrl(string url) 
+    public void PlayUrl(string url)
     {
         Debug.Log("Loading race: " + url);
         StartCoroutine(FetchRaceLogOverHTTP(url));
     }
 
     // Called from the page javascript!
-    public void ApplyJSONEvent(string eventJson) 
+    public void ApplyJSONEvent(string eventJson)
     {
         ApplyEvent(GameEvent.FromJson(eventJson));
     }
@@ -76,7 +76,7 @@ public class PlaybackController : RemoteEventPlayer
         this.index = 0;
         UpdateCars(new CarStatus[]{ });
         EventBus.Publish(new ResetSimulator());
-    }   
+    }
 
     private void Update()
     {
@@ -103,13 +103,13 @@ public class PlaybackController : RemoteEventPlayer
         return true;
     }
 
-    
+
 
     IEnumerator FetchRaceLogOverHTTP(string raceLogUrl)
     {
         Debug.Log("Initializing playback");
 
-        // TODO: extract parameters and use raceId parameter to load /api/v1/race/:raceId 
+        // TODO: extract parameters and use raceId parameter to load /api/v1/race/:raceId
 /*
         var uri = new Uri(Application.absoluteURL);
         var ps = System.Web.HttpUtility.ParseQueryString(uri.Query);

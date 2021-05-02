@@ -23,7 +23,7 @@ public class GameEvent
     public float timestamp = NewTimeStamp();
 
     public static GameEvent FromJson(string json)
-    {        
+    {
         var typeName = JsonUtility.FromJson<GameEvent>(json).type;
         // deserialise first as plain GameEvent to get the instance Type
         var type = System.Type.GetType(typeName);
@@ -135,12 +135,12 @@ public interface PhaseChange { }
 
 public class CarFinished: CarEvent
 {
-    public CarFinished(CarInfo car): base(car) { }    
+    public CarFinished(CarInfo car): base(car) { }
 }
 
 public class RaceWon: CarEvent
 {
-    public RaceWon(CarInfo car): base(car) { }  
+    public RaceWon(CarInfo car): base(car) { }
 }
 
 

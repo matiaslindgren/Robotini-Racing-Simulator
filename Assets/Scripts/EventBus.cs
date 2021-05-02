@@ -7,7 +7,7 @@ public class EventBus {
 
     public static void Publish<T>(T x)
     {
-        subject.OnNext(x);        
+        subject.OnNext(x);
     }
 
     public static IObservable<T> Receive<T>() where T : class

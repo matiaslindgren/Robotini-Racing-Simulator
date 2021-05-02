@@ -155,7 +155,7 @@ public class CarController : MonoBehaviour
         }
         EventBus.Publish(new CarCrashed(CarInfo));
         Debug.Log("Collision: " + CarInfo?.name);
-        this.collidingSince = DateTime.Now;   
+        this.collidingSince = DateTime.Now;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -225,7 +225,7 @@ public class CarController : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (this.socket != null) 
+        if (this.socket != null)
         {
             this.socket = null;
         }
@@ -234,7 +234,7 @@ public class CarController : MonoBehaviour
     public void SetSocket(CarSocketBase socket) {
         this.socket = socket;
         var cameraOutput = GetComponentInChildren<CameraOutputController>();
-        cameraOutput.SetSocket(socket);        
+        cameraOutput.SetSocket(socket);
     }
 
     public CarInfo CarInfo { get

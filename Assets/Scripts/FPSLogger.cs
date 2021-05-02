@@ -6,7 +6,7 @@ using UniRx;
 using System.IO;
 
 public class FPSLogger : MonoBehaviour
-{   
+{
     class Stat {
         public string name;
         private int count = 0;

@@ -80,7 +80,7 @@ public abstract class CarSocketBase {
     }
 
     public IEnumerable<JsonControlCommand> ReceiveCommands()
-    {        
+    {
         var commands = new List<JsonControlCommand>();
         JsonControlCommand command = null;
         while (recvQueue.TryDequeue(out command))
@@ -89,7 +89,7 @@ public abstract class CarSocketBase {
             {
                 // Seems we get null commands sometimes, when socket closing or something
                 commands.Add(command);
-            }            
+            }
         }
         return commands;
     }

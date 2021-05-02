@@ -2,7 +2,7 @@
 using System;
 
 public enum SimulatorMode
-{        
+{
     Development,
     Race,
     Playback,

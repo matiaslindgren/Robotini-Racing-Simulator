@@ -7,7 +7,7 @@ using UniRx;
 public class RaceController : MonoBehaviour
 {
     public GameObject carPrefab;
-    
+
     [HideInInspector]
     public bool motorsEnabled = true;
     public SplineMesh.Spline track;
@@ -71,7 +71,7 @@ public class RaceController : MonoBehaviour
             {
                 setState(new FreePractice(this));
             }
-        });        
+        });
     }
 
     public void StartFreePractice() {
@@ -135,11 +135,11 @@ public class RaceController : MonoBehaviour
 
         public RaceLobby(RaceController c): base(c)
         {
-            
+
         }
-        
+
         public override void OnEnable() {
-            
+
             Debug.Log("RaceParameters:" + JsonUtility.ToJson(c.raceParameters));
 
             EventBus.Publish(new RaceLobbyInit(c.raceParameters));
@@ -148,11 +148,11 @@ public class RaceController : MonoBehaviour
                 cars[e.car.name] = e;
             });
             Subscribe<CarDisconnected>(e =>
-            {                
+            {
                 cars.Remove(e.car.name);
                 EventBus.Publish(new CarRemoved(e.car));
             });
-            
+
             Countdown(c.raceParameters.autoStartQualifyingSeconds, OnSessionFinish);
 
         }
@@ -169,7 +169,7 @@ public class RaceController : MonoBehaviour
     public abstract class Simulation : State {
         public Simulation(RaceController c): base(c)
         {
-            
+
         }
     }
 
@@ -206,7 +206,7 @@ public class RaceController : MonoBehaviour
             EventBus.Publish(new QualifyingStart(cars.Select(c => c.car).ToArray()));
             EventBus.Publish(CurrentStandings());
 
-            Countdown(c.raceParameters.qualifyingDurationSeconds, OnSessionFinish);            
+            Countdown(c.raceParameters.qualifyingDurationSeconds, OnSessionFinish);
         }
 
         public override void OnSessionFinish()
@@ -219,7 +219,7 @@ public class RaceController : MonoBehaviour
             EventBus.Publish(new QualifyingResults(results));
             var startingOrder = results.Select(l => l.car).ToArray();
 
-            c.setState(new StartingGrid(c, startingOrder));                
+            c.setState(new StartingGrid(c, startingOrder));
         }
 
         public override int compareLaps(LapCompleted a, LapCompleted b)
@@ -242,8 +242,8 @@ public class RaceController : MonoBehaviour
             Debug.Log("Starting grid for race");
             EventBus.Publish(new StartingGridInit(startingGrid));
             EventBus.Publish(CurrentStandings());
-            
-            
+
+
             int i = 0;
             foreach (var carInfo in startingGrid)
             {
@@ -282,7 +282,7 @@ public class RaceController : MonoBehaviour
         int secondsRemaining = 0;
 
         public Race(RaceController c): base(c)
-        {            
+        {
             c.motorsEnabled = true;
             qualifying = false;
         }
@@ -298,12 +298,12 @@ public class RaceController : MonoBehaviour
             Subscribe<LapCompleted>(l => {
                 if (l.lapCount >= c.raceParameters.lapCount || finishers > 0)
                 {
-                    c.cars[l.car.name].Finished();                    
+                    c.cars[l.car.name].Finished();
                     if (finishers++ == 0)
                     {
                         firstCarFinished = Time.time;
                         EventBus.Publish(new RaceWon(l.car));
-                    }                    
+                    }
                     checkForFinish();
                 }
             });
@@ -317,7 +317,7 @@ public class RaceController : MonoBehaviour
                 raceStarted + c.raceParameters.raceTimeoutSeconds,
                 firstCarFinished + c.raceParameters.raceTimeoutAfterWinnerSeconds);
             int remaining = (int)(raceEndsAt - Time.time);
-            
+
             if (remaining != secondsRemaining) {
                 secondsRemaining = remaining;
                 EventBus.Publish(new SecondsRemaining(secondsRemaining));
@@ -357,7 +357,7 @@ public class RaceController : MonoBehaviour
         {
             Debug.Log("Starting free practice");
             base.OnEnable();
-            EventBus.Publish(new FreePracticeStart());            
+            EventBus.Publish(new FreePracticeStart());
 
             Subscribe<CarConnected>(e =>
             {
@@ -397,7 +397,7 @@ public class RaceController : MonoBehaviour
         public bool qualifying = true;
         public Racing(RaceController c): base(c)
         {
-        
+
         }
 
         public abstract int compareLaps(LapCompleted a, LapCompleted b);
@@ -416,7 +416,7 @@ public class RaceController : MonoBehaviour
             var standings = c.cars.Values
                 .Select(c => c.lastLap)
                 .ToArray();
-            Array.Sort(standings, compareLaps);            
+            Array.Sort(standings, compareLaps);
 
             return new CurrentStandings(standings, qualifying);
         }
@@ -448,7 +448,7 @@ public class RaceController : MonoBehaviour
             }
             return lb - la;
         }
-    }    
+    }
 
     public abstract class State
     {
@@ -463,7 +463,7 @@ public class RaceController : MonoBehaviour
 
 
         public virtual void OnEnable()
-        {            
+        {
             sessionStartTime = System.DateTime.Now;
             Subscribe<MotorsToggle>(x => {
                 Debug.Log("Motors enabled: " + c.motorsEnabled);
@@ -489,7 +489,7 @@ public class RaceController : MonoBehaviour
         public abstract CurrentStandings CurrentStandings();
 
         public virtual void CarHitTrigger(GameObject car, int segment) {
-            
+
         }
         public void Subscribe<T>(Action<T> action) where T : class
         {
@@ -511,7 +511,7 @@ public class RaceController : MonoBehaviour
             }
         }
 
-        public void Countdown(int seconds, Action action) {            
+        public void Countdown(int seconds, Action action) {
             Debug.Log("Start countdown, " + seconds + " seconds");
             var secondsRemaining = Observables.Countdown(seconds);
 
@@ -533,7 +533,7 @@ public class RaceController : MonoBehaviour
                     return;
                 }
             }
-            OnSessionFinish();    
+            OnSessionFinish();
         }
 
         public abstract void OnSessionFinish();
@@ -560,7 +560,7 @@ public class RaceController : MonoBehaviour
     }
 
     class CarStatus
-    {        
+    {
         internal float lastLapRecordedAt = Time.time;
         public readonly CarInfo CarInfo;
         internal LapCompleted lastLap;
@@ -629,7 +629,7 @@ public class RaceController : MonoBehaviour
             Debug.Log("Lap Time for '" + CarInfo.name + "': " + lastTime);
             lastLapRecordedAt = now;
             var bestTime = (lastTime < lastLap.bestLap || lastLap.bestLap == 0) ? lastTime : lastLap.bestLap;
-            
+
             this.lastLap = new LapCompleted(CarInfo, lapCount, lastTime, bestTime, totalTime, false);
             EventBus.Publish(lastLap);
         }

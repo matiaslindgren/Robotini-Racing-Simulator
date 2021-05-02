@@ -42,7 +42,7 @@ public class ObjectLabel : MonoBehaviour
         }
         else
         {
-            
+
             thisTransform.position = cam.WorldToScreenPoint(target.transform.position + offset);
 
             Debug.Log(thisTransform.position);

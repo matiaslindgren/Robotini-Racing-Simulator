@@ -11,11 +11,11 @@ public class CarLabels : MonoBehaviour
     public float clampBorderSize = 0.05f;  // How much viewport space to leave at the borders when a label is being clamped
     public bool useMainCamera = true;   // Use the camera tagged MainCamera
     public Camera cameraToUse;   // Only use this if useMainCamera is false
-    Camera cam;    
+    Camera cam;
     Transform camTransform;
 
     void Start()
-    {        
+    {
         if (useMainCamera)
             cam = Camera.main;
         else
@@ -23,7 +23,7 @@ public class CarLabels : MonoBehaviour
         camTransform = cam.transform;
     }
 
-  
+
     // Update is called once per frame
     void Update()
     {
@@ -69,7 +69,7 @@ public class CarLabels : MonoBehaviour
         }
         else
         {
-            
+
             labelTransform.position = cam.WorldToScreenPoint(car.transform.position + offset);
         }
     }

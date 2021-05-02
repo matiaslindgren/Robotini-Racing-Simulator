@@ -62,7 +62,7 @@ public class LapTimeDisplay : MonoBehaviour
         {
             GameObject row = Instantiate(lapTimeRowPrefab);
             row.transform.SetParent(lapTimeList.transform, false);
-            timers[carName] = new TimeWrapper(row, car);            
+            timers[carName] = new TimeWrapper(row, car);
         }
     }
 
@@ -73,7 +73,7 @@ public class LapTimeDisplay : MonoBehaviour
             List<TimeWrapper> times = new List<TimeWrapper>(timers.Values);
             times.Sort(compareTimes);
             return times.Select(e => e.car).ToArray();
-        } 
+        }
     }
 
     private int compareTimes(TimeWrapper t1, TimeWrapper t2)
@@ -117,7 +117,7 @@ public class LapTimeDisplay : MonoBehaviour
         {
             this.car = car;
             this.timeListElement = row;
-            setTexts("", "", "", "");            
+            setTexts("", "", "", "");
             RectTransform rect = row.GetComponent<RectTransform>();
             rect.localScale = Vector3.one;
             rect.anchoredPosition = new Vector2(0, -25);
@@ -166,7 +166,7 @@ public class LapTimeDisplay : MonoBehaviour
                     }
                 }
                 setTexts(FormattedTime(lap.lastLap), FormattedTime(lap.bestLap), lap.lapCount.ToString(), totalTime);
-            }            
+            }
         }
         private void setTexts(string lastLap, string bestLap, string lapCount, string totalTime)
         {
@@ -176,7 +176,7 @@ public class LapTimeDisplay : MonoBehaviour
             var count = System.Math.Min(texts.Length, t.childCount);
             for (var i = 0; i < count; i++)
             {
-                var c = t.GetChild(i);                
+                var c = t.GetChild(i);
                 c.GetComponent<TextMeshProUGUI>().text = texts[i];
             }
             t.GetComponentInChildren<Image>().color = car.GetColor();

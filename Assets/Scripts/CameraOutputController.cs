@@ -29,7 +29,7 @@ class WebC : C {
         RenderTexture.active = renderTexture;
         virtualPhoto.ReadPixels(new Rect(0, 0, socket.imageWidth, socket.imageHeight), 0, 0);
         virtualPhoto.Apply();
-        RenderTexture.active = null; //can help avoid errors 
+        RenderTexture.active = null; //can help avoid errors
         // TODO: Abstract this into socket, use Pixel32 in web player
         latestCameraData = virtualPhoto.GetPixels32();
     }
@@ -200,7 +200,7 @@ class SyncC : C {
         RenderTexture.active = renderTexture;
         virtualPhoto.ReadPixels(new Rect(0, 0, socket.imageWidth, socket.imageHeight), 0, 0);
         virtualPhoto.Apply();
-        RenderTexture.active = null; //can help avoid errors 
+        RenderTexture.active = null; //can help avoid errors
         // TODO: Abstract this into socket, use Pixel32 in web player
         latestCameraData = virtualPhoto.GetPixelData<uint>(0).ToArray();
     }
@@ -223,14 +223,14 @@ class SyncC : C {
 
 [RequireComponent(typeof(Camera))]
 public class CameraOutputController : MonoBehaviour
-{    
+{
     private C c;
 
     private Camera mCamera;
     private RenderTexture renderTexture;
     private Texture2D virtualPhoto;
     private bool read = false;
-    
+
     private volatile CarSocketBase socket;
     FPSLogger logger;
 
@@ -256,8 +256,8 @@ public class CameraOutputController : MonoBehaviour
             return;
         }
         renderTexture = new RenderTexture((int)socket.imageWidth, (int)socket.imageHeight, 24, RenderTextureFormat.ARGB32);
-        renderTexture.antiAliasing = 2;        
-        
+        renderTexture.antiAliasing = 2;
+
         Debug.Log("CameraOutputController started");
         mCamera.rect = new Rect(0, 0, 1, 1);
         mCamera.aspect = 1.0f * socket.imageWidth / socket.imageHeight;
