@@ -165,7 +165,7 @@ public class CarController : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<CarController>() != null) return; // ignore if colliding with other car
         float collidingFor = GameEvent.TimeDiff(System.DateTime.Now, this.collidingSince);
-        if (collidingFor >= 2) {
+        if (collidingFor >= 0.2) {
             returnToTrack();
         }
     }
@@ -202,7 +202,8 @@ public class CarController : MonoBehaviour
     private void returnToTrack() {
         Debug.Log("Returning car to track: " + CarInfo?.name);
         var track = FindObjectOfType<SplineMesh.Spline>();
-        var closest = ClosestTrackSample(track);
+        /* var closest = ClosestTrackSample(track); */
+        var closest = track.GetSampleAtDistance(UnityEngine.Random.Range(0, track.Length));
         rigidBody.position = closest.location + 0.1f * Vector3.up;
         rigidBody.rotation = closest.Rotation;
         rigidBody.velocity = Vector3.zero;
